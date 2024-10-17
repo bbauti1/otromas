@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Comunicado</title>
+</head>
+<body>
+    <h1>Enviar Comunicado a Responsable</h1>
+
+    <form action="/enviar-comunicado" method="POST">
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required><br>
+
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" required></textarea><br>
+
+        <label for="estudianteId">Estudiante:</label>
+        <select id="estudianteId" name="estudianteId">
+            <% estudiantesACargo.forEach(function(estudiante) { %>
+                <option value="<%= estudiante._id %>">
+                    <%= estudiante.nombre %> <%= estudiante.apellido %> (Curso: <%= estudiante.cursoPerteneciente.anio %> - <%= estudiante.cursoPerteneciente.division %>)
+                </option>
+            <% }) %>
+        </select><br>
+
+        <label for="responsableId">Responsable:</label>
+        <select id="responsableId" name="responsableId">
+            <% responsables.forEach(function(responsable) { %>
+                <option value="<%= responsable._id %>">
+                    <%= responsable.nombre %> <%= responsable.apellido %>
+                </option>
+            <% }) %>
+        </select><br>
+
+        <button type="submit">Enviar Comunicado</button>
+    </form>
+
+    <a href="/preceptor-dashboard">Volver al Dashboard</a>
+</body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Comunicados Recibidos</title>
+</head>
+<body>
+    <h1>Comunicados Recibidos</h1>
+
+    <% if (comunicados.length > 0) { %>
+        <ul>
+            <% comunicados.forEach(function(comunicado) { %>
+                <li>
+                    <h3><%= comunicado.titulo %></h3>
+                    <p><%= comunicado.mensaje %></p>
+                    <p>Para el estudiante: <%= comunicado.fk_id_estudiante.nombre %> <%= comunicado.fk_id_estudiante.apellido %></p>
+                    <p>Estado: <%= comunicado.leido ? 'Leído' : 'No leído' %></p>
+                    <p>Fecha: <%= new Date(comunicado.createdAt).toLocaleDateString() %></p>
+                    
+                    
+                    <!-- Checkbox para marcar como leído -->
+                    <form action="/marcar-leido-comunicado/<%= comunicado._id %>" method="POST">
+                        <input type="hidden" name="leido" value="true">
+                        <input type="checkbox" name="markLeido" <%= comunicado.leido ? 'checked disabled' : '' %> onchange="this.form.submit()"> Marcar como leído
+                    </form>
+                    <hr>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No tienes comunicados.</p>
+    <% } %>
+
+    <a href="/responsable-dashboard">Volver al Dashboard</a>
+</body>
+</html>

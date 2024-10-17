@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Comunicados del Curso</title>
+    <style>
+        .comunicado {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .comunicado-general {
+            background-color: #f5f5f5;
+        }
+        .comunicado-curso {
+            background-color: #e0f7fa;
+        }
+        .etiqueta-general {
+            color: #ff5722;
+            font-weight: bold;
+        }
+        .etiqueta-curso {
+            color: #03a9f4;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Comunicados del Curso <%= curso.anio %> - <%= curso.division %></h1>
+
+    <% if (comunicadosCurso.length > 0) { %>
+        <h2>Comunicados Específicos del Curso</h2>
+        <ul>
+            <% comunicadosCurso.forEach(function(comunicado) { %>
+                <li class="comunicado comunicado-curso">
+                    <h3><%= comunicado.titulo %> <span class="etiqueta-curso">[Curso]</span></h3>
+                    <p><%= comunicado.info %></p>
+                    <p><strong>Fecha de creación:</strong> <%= comunicado.createdAt.toLocaleDateString() %></p>
+                    <% if (comunicado.fk_id_preceptor) { %>
+                        <p><strong>Creado por:</strong> Preceptor</p>
+                    <% } else if (comunicado.fk_id_directivo) { %>
+                        <p><strong>Creado por:</strong> Directivo</p>
+                    <% } %>
+
+                    <form action="/marcar-leido/<%= comunicado._id %>" method="POST">
+                        <input type="checkbox" name="leido" value="true" 
+                            <%= comunicado.leido ? 'checked disabled' : '' %> 
+                            onchange="this.form.submit()"> Marcar como leído
+                    </form>
+                    <hr>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No hay comunicados específicos para este curso.</p>
+    <% } %>
+
+    <% if (comunicadosGenerales.length > 0) { %>
+        <h2>Comunicados Generales</h2>
+        <ul>
+            <% comunicadosGenerales.forEach(function(comunicado) { %>
+                <li class="comunicado comunicado-general">
+                    <h3><%= comunicado.titulo %> <span class="etiqueta-general">[General]</span></h3>
+                    <p><%= comunicado.info %></p>
+                    <p><strong>Fecha de creación:</strong> <%= comunicado.createdAt.toLocaleDateString() %></p>
+                    <% if (comunicado.fk_id_preceptor) { %>
+                        <p><strong>Creado por:</strong> Preceptor</p>
+                    <% } else if (comunicado.fk_id_directivo) { %>
+                        <p><strong>Creado por:</strong> Directivo</p>
+                    <% } %>
+                    <hr>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No hay comunicados generales disponibles.</p>
+    <% } %>
+
+    <a href="/responsable-dashboard">Volver al Dashboard</a>
+</body>
+</html>

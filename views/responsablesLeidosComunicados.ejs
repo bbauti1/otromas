@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsables que leyeron los comunicados</title>
+</head>
+<body>
+    <h1>Responsables que leyeron los comunicados individuales del curso</h1>
+
+    <% if (comunicadosCurso.length > 0) { %>
+        <h2>Comunicados Individuales</h2>
+        <ul>
+            <% comunicadosCurso.forEach(function(comunicado) { %>
+                <li>
+                    <h3>Título: <%= comunicado.titulo %></h3>
+                    <p>Mensaje: <%= comunicado.mensaje %></p>
+                    <p><strong>Responsable:</strong> <%= comunicado.fk_id_responsable.nombre %> <%= comunicado.fk_id_responsable.apellido %></p>
+                    <p><strong>Estudiante:</strong> <%= comunicado.fk_id_estudiante.nombre %> <%= comunicado.fk_id_estudiante.apellido %></p>
+                    <p><strong>Estado:</strong> <%= comunicado.leido ? 'Leído' : 'No leído' %></p>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No hay comunicados individuales para este curso.</p>
+    <% } %>
+
+    <% if (responsablesLeidos.length > 0) { %>
+        <h2>Responsables que marcaron como leídos</h2>
+        <ul>
+            <% responsablesLeidos.forEach(function(leido) { %>
+                <li>
+                    <strong>Responsable:</strong> <%= leido.fk_id_responsable.nombre %> <%= leido.fk_id_responsable.apellido %>
+                    <p>Estudiante: <%= leido.fk_id_comunicado.fk_id_estudiante.nombre %> <%= leido.fk_id_comunicado.fk_id_estudiante.apellido %></p>
+                </li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <a href="/preceptor-dashboard">Volver al Dashboard</a>
+</body>
+</html>

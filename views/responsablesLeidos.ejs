@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Responsables que marcaron como leído - Curso <%= curso.anio %> - <%= curso.division %></title>
+</head>
+<body>
+    <h1>Responsables que marcaron como leído - Curso <%= curso.anio %>º - <%= curso.division %>º</h1>
+
+    <% if (comunicadosConResponsables.length > 0) { %>
+        <ul>
+            <% comunicadosConResponsables.forEach(function(item) { %>
+                <li>
+                    <h3>Comunicado: <%= item.comunicado.titulo %></h3>
+                    <p><%= item.comunicado.info %></p>
+                    <p><strong>Fecha de creación:</strong> <%= item.comunicado.createdAt.toLocaleDateString() %></p>
+                    
+                    <% if (item.responsablesConEstudiantes.length > 0) { %>
+                        <h4>Responsables que han marcado como leído:</h4>
+                        <ul>
+                            <% item.responsablesConEstudiantes.forEach(function(relacion) { %>
+                                <li>
+                                    <strong>Responsable:</strong> <%= relacion.responsable.nombre %> <%= relacion.responsable.apellido %> - DNI: <%= relacion.responsable.dni %>
+                                    <% if (relacion.estudiante) { %>
+                                        <br><strong>Responsable de:</strong> <%= relacion.estudiante.nombre %> <%= relacion.estudiante.apellido %> - DNI: <%= relacion.estudiante.dni %>
+                                    <% } else { %>
+                                        <br><strong>Responsable de:</strong> No asignado
+                                    <% } %>
+                                </li>
+                            <% }) %>
+                        </ul>
+                    <% } else { %>
+                        <p>Ningún responsable ha marcado este comunicado como leído aún.</p>
+                    <% } %>
+
+                    <hr>
+                </li>
+            <% }) %>
+        </ul>
+    <% } else { %>
+        <p>No hay comunicados para este curso.</p>
+    <% } %>
+
+    <a href="/preceptor-dashboard">Volver al Dashboard</a>
+</body>
+</html>

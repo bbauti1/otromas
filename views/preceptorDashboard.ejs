@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Preceptor</title>
+</head>
+<body>
+    <h1>Bienvenido/a, <%= preceptor.nombre %> <%= preceptor.apellido %>!</h1>
+    <h2>Gestiona tus cursos y estudiantes pendientes</h2>
+    
+    <h3>Tus Cursos:</h3>
+    <ul>
+        <% cursos.forEach(curso => { %>
+            <li>
+                Curso: <%= curso.anio %> - <%= curso.division %> 
+                <a href="/estudiantes/pendientes/<%= curso._id %>">Ver estudiantes pendientes</a> |
+                <a href="/estudiantes-rechazados/<%= curso._id %>">Ver estudiantes rechazados</a> |
+                <a href="/estudiantes-aceptados/<%= curso._id %>">Ver estudiantes aceptados</a> |
+                <a href="/estudiantes-baja/<%= curso._id %>">Ver estudiantes dados de baja</a> |
+                <a href="/solicitudes-preceptor/<%= curso._id %>">Ver solicitudes de responsables pendientes</a> |
+                <a href="/responsables-rechazados/<%= curso._id %>">Ver responsables rechazados</a> |
+                <a href="/responsables-aceptados/<%= curso._id %>">Ver responsables aceptados</a> |
+                <a href="/responsables-baja/<%= curso._id %>">Ver responsables dados de baja</a> |
+                <a href="/responsables-leidos/<%= curso._id %>">Ver responsables que marcaron como leído comunicados</a> |
+                <a href="/enviar-comunicado-responsable/<%= curso._id %>">Enviar comunicado a responsables</a>
+                <a href="/responsables-leidos-comunicados/<%= curso._id %>"> Ver comunicados enviados a responsables</a>
+                <br> <br>
+            </li>
+        <% }); %>
+    </ul>
+    <br> <a href="/comunicado"> Crear comunicado. </a>
+    <br> <a href="/comunicados-preceptor"> Mis comunicados a cursos. </a>
+    <br> <a href="/elegir-curso"> Elegir curso. </a>
+    <br> <a href="/logout"> Cerrar sesión</a>
+    <footer>
+        <div class="button-container">
+            <a href="preceptor-dashboard">
+                <button class="button material-icons">home</button>
+            </a>
+            <a href="/comunicado">
+                <button class="button material-icons">drive_file_rename_outline</button>
+            </a>
+            <a href="/perfil">
+                <button class="button material-icons">person</button>
+            </a>
+            <a href="/logout">
+                <button class="button material-icons">logout</button>
+            </a>
+        </div>
+    </footer>
+</body>
+</html>

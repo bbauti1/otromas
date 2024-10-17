@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estudiantes Dados de Baja</title>
+</head>
+<body>
+    <h1>Estudiantes Dados de Baja para el Curso</h1>
+
+    <% if (estudiantes.length === 0) { %>
+        <p>No hay estudiantes dados de baja en este momento.</p>
+    <% } else { %>
+        <ul>
+            <% estudiantes.forEach(estudiante => { %>
+                <li>
+                    <%= estudiante.apellido %> <%= estudiante.nombre %> - <%= estudiante.dni %> - <%= estudiante.email %>
+                    <form action="/dar-alta-estudiante/<%= estudiante._id %>/<%= estudiante.cursoPerteneciente %>" method="POST" style="display:inline;">
+                        <button type="submit">Dar de alta</button>
+                    </form>
+                </li>
+            <% }) %>
+        </ul>
+    <% } %>
+
+    <a href="/preceptor-dashboard">Volver al dashboard</a>
+</body>
+</html>

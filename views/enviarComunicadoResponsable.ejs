@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Enviar Comunicado a Responsables</title>
+</head>
+<body>
+    <h1>Enviar Comunicado a Responsables del Curso: <%= curso.anio %> - <%= curso.division %></h1>
+
+    <form action="/enviar-comunicado-responsable/<%= curso._id %>" method="POST">
+        <label for="responsable">Selecciona un responsable:</label>
+        <select name="responsableId" id="responsable" required>
+            <% responsables.forEach(function(responsable) { %>
+                <option value="<%= responsable.fk_id_responsable._id %>">
+                    <%= responsable.fk_id_responsable.nombre %> <%= responsable.fk_id_responsable.apellido %> 
+                    (Responsable de <%= responsable.fk_id_estudiante.nombre %> <%= responsable.fk_id_estudiante.apellido %>)
+                </option>
+            <% }) %>
+        </select>
+
+        <!-- Seleccionamos el estudiante correspondiente al responsable -->
+        <% responsables.forEach(function(responsable) { %>
+            <input type="hidden" name="estudianteId" value="<%= responsable.fk_id_estudiante._id %>">
+        <% }) %>
+
+        <label for="titulo">Título del Comunicado:</label>
+        <input type="text" id="titulo" name="titulo" required>
+
+        <label for="mensaje">Mensaje:</label>
+        <textarea id="mensaje" name="mensaje" required></textarea>
+
+        <button type="submit">Enviar Comunicado</button>
+    </form>
+
+    <a href="/preceptor-dashboard">Volver al Dashboard</a>
+</body>
+</html>
